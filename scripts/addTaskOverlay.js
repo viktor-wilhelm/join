@@ -1,25 +1,12 @@
+import { renderAddTask, clearFields } from './addTask.js';
+
 let selectedCategoryForNewTask = "to do";
 
 /**
  * Opens the "Add Task" overlay panel on desktop screens, or navigates to the add-task page on mobile.
  * If the overlay exists, it also renders the task form into the panel.
  */
-function openAddTaskOverlay(category = "to do") {
-  if (window.innerWidth <= 768) {
-    window.location.href = "../html/add-task.html";
-    return;
-  }
-  selectedCategoryForNewTask = category;
-  const overlay = document.querySelector('.addtask-overlay');
-  const panel = document.querySelector('.addtask-panel');
 
-  if (overlay && panel) {
-    overlay.classList.add('is-open');
-    panel.classList.add('is-open');
-
-    renderAddTask('addtask-panel-content-id');
-  }
-}
 
 /**
  * Closes the "Add Task" overlay panel and resets all form fields.
@@ -32,9 +19,7 @@ function closeAddTaskOverlay() {
   if (overlay && panel) {
     overlay.classList.remove('is-open');
     panel.classList.remove('is-open');
-    if (typeof clearFields === 'function') {
-      clearFields();
-    }
+    clearFields();
   }
 }
 
@@ -87,3 +72,8 @@ function openAddTaskOverlay(category = "to do") {
     }, 0);
   }
 }
+
+export {
+  closeAddTaskOverlay,
+  openAddTaskOverlay,
+};

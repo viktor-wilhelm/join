@@ -88,3 +88,10 @@ function getPlusBadgeTemplate(count) {
         </div>`;
 }
 
+export {
+  getNoTaskTemplate,
+  getTaskCardTemplate,
+  getSubtasksTemplate,
+  getAssignedUserBadgeTemplate,
+  getPlusBadgeTemplate,
+};

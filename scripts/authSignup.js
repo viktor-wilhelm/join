@@ -1,3 +1,5 @@
+import { getData, postData } from './firebase.js';
+import { showInputError, hideInputError, initPasswordIconToggle } from './authUtilities.js';
 const signupForm = document.getElementById('signupForm');
 const signupName = document.getElementById('signupName');
 const signupEmail = document.getElementById('signupEmail');

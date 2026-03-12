@@ -1,3 +1,6 @@
+import { getData } from './firebase.js';
+import { initDataStore, injectCurrentUserAsContact } from './dataStore.js';
+import { initPasswordIconToggle } from './authUtilities.js';
 const loginForm = document.getElementById('loginForm');
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');

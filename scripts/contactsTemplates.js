@@ -284,3 +284,20 @@ function templateActionFab() {
         <i class="icon-user-plus"><img src="../assets/img/contacts/more.svg"> </i>
     `;
 }
+export {
+  templateContact,
+  templateContactDetails,
+  templateContactDetailHeader,
+  templateContactDetailInformation,
+  templateRenderLetterGroup,
+  templateAddNewContact,
+  templateAddNewContactheader,
+  templateAddNewContactProfilePicture,
+  templateAddNewContactForm,
+  templateEditContact,
+  templateEditContactHeader,
+  templateEditContactProfilePicture,
+  templateEditContactForm,
+  templateShowMoreAction,
+  templateActionFab,
+};

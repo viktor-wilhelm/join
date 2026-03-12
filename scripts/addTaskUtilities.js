@@ -1,3 +1,7 @@
+import { assignContactColors } from './utilities.js';
+import { handleAddTaskSuccess, clearFields } from './addTask.js';
+import { templateContact } from './addTaskTemplate.js';
+
 const selectedContacts = new Map();
 const mandatoryFields = [
   { inputId: 'taskTitle', errorId: 'titleErrorMessage' },
@@ -28,7 +32,7 @@ function loadContactsFromSession() {
   const rawData = sessionStorage.getItem('joinData');
   const data = rawData ? JSON.parse(rawData) : { contacts: {} };
   const contactsArray = Object.entries(data.contacts).map(([id, c]) => ({ id, ...c }));
-  return typeof assignContactColors === 'function' ? assignContactColors(contactsArray) : contactsArray;
+  return assignContactColors(contactsArray);
 }
 
 /**
@@ -326,3 +330,12 @@ function getInitial(name) {
 }
 
 document.addEventListener('click', closeDropdownExternal);
+
+export {
+  initDropdown,
+  loadContactsFromSession,
+  filterContacts,
+  resetSelectedContacts,
+  createTask,
+  validateAllTasks,
+};

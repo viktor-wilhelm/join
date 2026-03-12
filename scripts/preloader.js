@@ -18,6 +18,7 @@ function startAnimation() {
         setTimeout(() => finishAnimation(preloader, animLogo, finalLogo), 1200);
     }, 600);
 }
+
 /**
  * Switches the logo source to the blue version on mobile devices 
  * during the animation.

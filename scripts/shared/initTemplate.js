@@ -1,3 +1,8 @@
+import { includeHTML } from './includeHtml.js';
+import { getInitials } from './utilities.js';
+import { removeCurrentUserContact, resetDataStore } from '../dataStore.js';
+import { setSidebarMode, setupLoginButton, setActiveMenuBtnOnLoad, setupMenuNavigation } from './menu.js';
+
 /**
  * Initializes the shared template (header/menu) after includes are loaded
  */
@@ -44,11 +49,7 @@ function setupLogoutLink() {
     sessionStorage.removeItem("joinData");
     sessionStorage.removeItem("greetingShown");
 
-    dataStore = {
-      tasks: null,
-      contacts: null,
-      users: null,
-    };
+    resetDataStore();
 
     window.location.href = "../index.html";
   });
@@ -336,3 +337,7 @@ function applyGuestModeClass() {
 document.addEventListener("DOMContentLoaded", () => {
   initTemplate();
 });
+
+export {
+  initTemplate,
+};

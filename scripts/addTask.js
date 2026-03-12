@@ -1,3 +1,9 @@
+import { protectPage } from './utilities.js';
+import { initDataStore } from './dataStore.js';
+import { templateAddTaskForm, templateAddSubtask } from './addTaskTemplate.js';
+import { initDropdown, loadContactsFromSession, filterContacts, validateAllTasks, resetSelectedContacts, createTask } from './addTaskUtilities.js';
+import { closeAddTaskOverlay } from './addTaskOverlay.js';
+
 let task = [];
 
 /**
@@ -8,9 +14,7 @@ async function initAddTask() {
   const currentUser = protectPage();
   if (!currentUser) return;
 
-  if (typeof initDataStore === 'function') {
-    await initDataStore();
-  }
+  await initDataStore();
 
   if (document.getElementById('mainContent')) {
     renderAddTask('mainContent');
@@ -43,7 +47,7 @@ function renderAddTask(containerId) {
 function initializeAllScripts() {
   initDateInput();
   initSubtaskInput();
-  if (typeof initDropdown === 'function') initDropdown();
+  initDropdown();
   initDropdownListeners();
   initPriorityAndCategory();
   initSubtaskListeners();
@@ -252,9 +256,7 @@ function handleAddTaskSuccess() {
     modal?.classList.remove('show');
 
     if (isOverlay) {
-      if (typeof closeAddTaskOverlay === 'function') {
         closeAddTaskOverlay();
-      }
       if (typeof initBoard === 'function') {
         initBoard();
       }
@@ -314,3 +316,10 @@ function initFormButtons() {
 }
 
 document.addEventListener("DOMContentLoaded", initAddTask);
+
+export {
+  initAddTask,
+  renderAddTask,
+  clearFields,
+  handleAddTaskSuccess,
+};

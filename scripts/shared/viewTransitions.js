@@ -115,3 +115,12 @@ if (document.readyState === "loading") {
 } else {
   setupViewTransitions();
 }
+
+export {
+  supportsViewTransitions,
+  shouldUseTransition,
+  navigateWithTransition,
+  setupViewTransitions,
+  setupLinkInterception,
+  setupHistoryTransitions,
+};

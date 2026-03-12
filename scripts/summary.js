@@ -1,3 +1,5 @@
+import { initDataStore, getTasks } from './dataStore.js';
+import { protectPage } from './utilities.js';
 let allTasks = [];
 let currentUser = {};
 

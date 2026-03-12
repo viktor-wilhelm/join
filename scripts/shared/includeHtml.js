@@ -18,3 +18,7 @@ async function includeHTML() {
     node.removeAttribute("w3-include-html");
   }
 }
+
+export {
+  includeHTML,
+};

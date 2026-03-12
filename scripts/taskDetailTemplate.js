@@ -289,3 +289,15 @@ function templatePriorityButton(prio, lowPrio, isActive, iconPath) {
         </button>
     `;
 }
+
+export {
+  getTaskDetailTemplate,
+  getDetailedContactItemTemplate,
+  getNoAssignedTemplate,
+  getDetailSubtaskItemTemplate,
+  getNoSubtasksTemplate,
+  templateEditSubtaskItem,
+  templateEditContactItem,
+  templateEditTaskForm,
+  templatePriorityButton,
+};

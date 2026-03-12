@@ -1,5 +1,16 @@
+import { protectPage, formatTaskDate } from './utilities.js';
+import { initDataStore, getContacts, getTasks, updateTasks } from './dataStore.js';
+import { getNoTaskTemplate, getTaskCardTemplate, getSubtasksTemplate,
+         getAssignedUserBadgeTemplate, getPlusBadgeTemplate } from './boardTemplates.js';
+import { openAddTaskOverlay, closeAddTaskOverlay } from './addTaskOverlay.js';
+import { closeTaskDetails } from './taskDetailOverlay.js';
+
+let currentUser;
+
 let tasks = [];
+function setTasks(t) { tasks = t; }
 let contacts = {};
+function setContacts(c_) { contacts = c_; }
 let currentDraggedElement = null;
 let currentMoveTask = null;
 
@@ -215,9 +226,7 @@ function initTaskDetailOverlay() {
     const detailOverlay = document.getElementById("taskDetailsOverlay");
     const detailContent = document.getElementById("taskDetailContent");
     detailOverlay?.addEventListener("click", () => {
-        if (typeof closeTaskDetails === "function") {
-            closeTaskDetails();
-        }
+        closeTaskDetails();
     });
     detailContent?.addEventListener("click", (event) => {
         event.stopPropagation();
@@ -366,3 +375,15 @@ searchInput.addEventListener("input", (e) => {
 
 document.addEventListener("click", closeAllMoveOverlays);
 document.addEventListener("DOMContentLoaded", initBoard);
+// Expose onclick handlers to global scope
+window.toggleMoveToTaskOverlay = toggleMoveToTaskOverlay;
+window.moveTaskViaOverlay = moveTaskViaOverlay;
+
+export {
+  setTasks,
+  setContacts,
+  renderBoard,
+  tasksFromArrayToObject,
+  tasks,
+  contacts,
+};

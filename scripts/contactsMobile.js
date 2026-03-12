@@ -1,3 +1,5 @@
+import { showContactDetails, loadedContacts, renderContactList, loadContactsFromStore } from './contacts.js';
+
 /**
  * Checks whether the application is running on a mobile device.
  * If the viewport width is below 768px, mobile-specific UI behavior is applied:
@@ -87,3 +89,15 @@ document.addEventListener("click", (event) => {
     closeActionFab();
   }
 });
+// Expose onclick handlers for HTML template strings
+window.closeActionFab = closeActionFab;
+window.contactsBackMobile = contactsBackMobile;
+window.showMoreAction = showMoreAction;
+
+export {
+  checkMobile,
+  showMoreAction,
+  closeActionFab,
+  contactsBackMobile,
+  removeActiveContact,
+};

@@ -192,3 +192,19 @@ function setupLoginButton() {
     });
   }
 }
+
+export {
+  setActiveMenuBtnOnLoad,
+  setActiveMenuBtn,
+  setActiveFooterLink,
+  initMenuNavigation,
+  setupMenuNavigation,
+  setupMenuButton,
+  getSidebarElements,
+  hideButtons,
+  showButtons,
+  applyExternalMode,
+  applyInternalMode,
+  setSidebarMode,
+  setupLoginButton,
+};

@@ -54,10 +54,10 @@ function getBadgeColors() {
 }
 
 /**
- * Formats a task date string into a localized German date format.
+ * Formats a task date string into a localized date format.
  *
  * @param {string} dateStr - The task date as a string (e.g., "2026-02-24").
- * @returns {string|undefined} The formatted date (e.g., "24. Feb. 2026") or undefined if input is invalid.
+ * @returns {string|undefined} The formatted date (e.g., "24.02.2026") or undefined if input is invalid.
  */
 function formatTaskDate(dateStr) {
     if (!dateStr) return;
@@ -71,3 +71,9 @@ function formatTaskDate(dateStr) {
     return `${day}.${month}.${year}`;
 }
 
+export {
+  protectPage,
+  assignContactColors,
+  getBadgeColors,
+  formatTaskDate,
+};

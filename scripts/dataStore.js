@@ -1,3 +1,6 @@
+import { getData } from './firebase.js';
+import { assignContactColors } from './utilities.js';
+
 const STORE_KEY = "joinData";
 
 let dataStore = {
@@ -137,3 +140,21 @@ function removeCurrentUserContact() {
     saveStore();
 }
 
+
+function resetDataStore() {
+    dataStore = { tasks: null, contacts: null, users: null };
+}
+
+export {
+  initDataStore,
+  saveStore,
+  getTasks,
+  getUsers,
+  getContacts,
+  updateTasks,
+  updateContacts,
+  injectCurrentUserAsContact,
+  removeCurrentUserContact,
+  resetDataStore,
+  dataStore,
+};

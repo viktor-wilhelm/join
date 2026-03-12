@@ -1,3 +1,11 @@
+import { protectPage, assignContactColors } from './utilities.js';
+import { initDataStore, dataStore, saveStore } from './dataStore.js';
+import { checkMobile, closeActionFab } from './contactsMobile.js';
+import { templateContact, templateContactDetails, templateRenderLetterGroup,
+         templateAddNewContact, templateEditContact } from './contactsTemplates.js';
+
+let currentUser;
+
 let loadedContacts = [];
 let contactIdCounter = 1;
 
@@ -398,3 +406,18 @@ function validateAndCreate() {
 }
 
 document.addEventListener("DOMContentLoaded", initContacts);
+// Expose onclick handlers to global scope for HTML template strings
+window.showContactDetails = showContactDetails;
+window.deleteContact = deleteContact;
+window.editContact = editContact;
+window.confirmEditContact = confirmEditContact;
+window.closeEditContact = closeEditContact;
+window.validateAndCreate = validateAndCreate;
+
+export {
+  loadContactsFromStore,
+  renderContactList,
+  getInitial,
+  showContactDetails,
+  loadedContacts,
+};

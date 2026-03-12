@@ -121,3 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
         btnToLogin.onclick = showLogin;
     }
 });
+
+export {
+  initPasswordIconToggle,
+  updateCardHeight,
+  showInputError,
+  hideInputError,
+  showSignup,
+  showLogin,
+  initAuthHeight,
+};

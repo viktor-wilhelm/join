@@ -128,3 +128,9 @@ function templateContact(initial, name, color) {
     </div>
   `;
 }
+
+export {
+  templateAddTaskForm,
+  templateAddSubtask,
+  templateContact,
+};

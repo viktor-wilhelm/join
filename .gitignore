@@ -22,6 +22,9 @@ package.json
 /build/
 /out/
 
+# Firebase config (contains sensitive credentials - never commit!)
+config/firebase.config.js
+
 # Env files
 .env
 .env.*.local

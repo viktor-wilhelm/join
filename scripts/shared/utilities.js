@@ -6,27 +6,23 @@
 /**
  * Extracts initials from a full name
  * @param {string} name - The full name (e.g., "Max Mustermann")
- * @param {string} fallback - Fallback value if name is empty (default: "MS")
+ * @param {string} fallback - Fallback value if name is empty (default: "SM")
  * @returns {string} The initials (e.g., "MM")
- *
- * @example
- * getInitials("Max Mustermann") // Returns "MM"
- * getInitials("John") // Returns "JO" (first 2 chars)
- * getInitials("") // Returns "MS" (fallback)
- * getInitials("", "AB") // Returns "AB" (custom fallback)
  */
 function getInitials(name, fallback = "SM") {
   if (!name || !name.trim()) return fallback;
 
   const parts = name.trim().split(/\s+/);
 
-  // Single name: take first 2 characters
   if (parts.length === 1) {
     return parts[0].substring(0, 2).toUpperCase();
   }
 
-  // Multiple names: take first char of first and last name
-  const firstNameInitial = parts[0][0]; // First name (e.g. "S" from "Sonja")
-  const lastNameInitial = parts[parts.length - 1][0]; // Last name (e.g. "M" from "Müller")
-  return (firstNameInitial + lastNameInitial).toUpperCase(); // "SM"
+  const firstNameInitial = parts[0][0];
+  const lastNameInitial = parts[parts.length - 1][0];
+  return (firstNameInitial + lastNameInitial).toUpperCase();
 }
+
+export {
+  getInitials,
+};

@@ -1,3 +1,10 @@
+import { tasks, setTasks, renderBoard, tasksFromArrayToObject } from './board.js';
+import { currentTask, renderTaskOverlay } from './taskDetailOverlay.js';
+import { updateTasks, getContacts } from './dataStore.js';
+import { getInitials } from './shared/utilities.js';
+import { templateEditSubtaskItem, templateEditContactItem,
+         templateEditTaskForm, templatePriorityButton } from './taskDetailTemplate.js';
+
 let editDropdownInitialized = false;
 
 /**
@@ -308,6 +315,11 @@ function filterEditContactList() {
 /**
 * Sets up the subtask input event listener.
  */
+function clearSubtaskInput() {
+    const input = document.getElementById('editSubtaskInput');
+    if (input) { input.value = ''; toggleEditSubtaskActions(); }
+}
+
 function initEditSubtaskInput() {
     const subInput = document.getElementById('editSubtaskInput');
     subInput?.addEventListener('keypress', (e) => {
@@ -317,3 +329,13 @@ function initEditSubtaskInput() {
         }
     });
 }
+// Expose onclick handlers to global scope
+window.editTask = editTask;
+window.addEditSubtask = addEditSubtask;
+window.clearSubtaskInput = clearSubtaskInput;
+window.deleteEditSubtask = deleteEditSubtask;
+window.editExistingSubtask = editExistingSubtask;
+window.toggleEditSubtaskActions = toggleEditSubtaskActions;
+window.setEditPriority = setEditPriority;
+window.saveEditedTask = saveEditedTask;
+window.toggleContactSelectionEdit = toggleContactSelectionEdit;

@@ -1,0 +1,12 @@
+const firebaseConfig = {
+  apiKey: "your-api-key-here",
+  authDomain: "your-project-id.firebaseapp.com",
+  databaseURL: "https://your-project-id-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "your-project-id",
+  storageBucket: "your-project-id.firebasestorage.app",
+  messagingSenderId: "your-messaging-sender-id",
+  appId: "your-app-id",
+  measurementId: "your-measurement-id"
+};
+
+export default firebaseConfig;

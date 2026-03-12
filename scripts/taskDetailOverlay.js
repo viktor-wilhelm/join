@@ -1,7 +1,15 @@
+import { tasks, setTasks, renderBoard, tasksFromArrayToObject } from './board.js';
+import { updateTasks, getContacts } from './dataStore.js';
+import { getInitials } from './shared/utilities.js';
+import { formatTaskDate } from './utilities.js';
+import { getTaskDetailTemplate, getDetailedContactItemTemplate, getNoAssignedTemplate,
+         getDetailSubtaskItemTemplate, getNoSubtasksTemplate } from './taskDetailTemplate.js';
+
 const taskDetailsOverlay = document.getElementById('taskDetailsOverlay');
 const taskDetailContent = document.getElementById('taskDetailContent');
 const overlayTransitionDuration = 250;
 let currentTask = null;
+function setCurrentTask(t) { currentTask = t; }
 
 /**
  * Opens the task details overlay for a specific task.
@@ -88,7 +96,7 @@ async function toggleSubtask(taskId, subtaskIndex) {
     await updateTasks(tasksFromArrayToObject(tasks));
 
     renderTaskOverlay();
-    renderBoard(searchInput?.value || "");
+    renderBoard(document.getElementById('search-task')?.value || '');
 }
 
 /**
@@ -101,14 +109,14 @@ async function toggleSubtask(taskId, subtaskIndex) {
  */
 async function deleteTask(taskId) {
     const previousTasks = [...tasks];
-    tasks = tasks.filter(t => t.id !== taskId);
+    setTasks(tasks.filter(t => t.id !== taskId));
     try {
         await updateTasks(tasksFromArrayToObject(tasks));
         closeTaskDetails();
-        renderBoard(searchInput?.value || "");
+        renderBoard(document.getElementById('search-task')?.value || '');
     } catch {
-        tasks = previousTasks;
-        renderBoard(searchInput?.value || "");
+        setTasks(previousTasks);
+        renderBoard(document.getElementById('search-task')?.value || '');
     }
 }
 
@@ -153,3 +161,19 @@ function getDetailSubtasksTemplate(taskId, subtasks) {
         return getDetailSubtaskItemTemplate(taskId, index, st.title, isDone);
     }).join("");
 }
+
+// Expose onclick handlers to global scope
+window.openTaskDetails = openTaskDetails;
+window.closeTaskDetails = closeTaskDetails;
+window.deleteTask = deleteTask;
+window.toggleSubtask = toggleSubtask;
+
+export {
+  setCurrentTask,
+  openTaskDetails,
+  closeTaskDetails,
+  renderTaskOverlay,
+  toggleSubtask,
+  deleteTask,
+  currentTask,
+};
