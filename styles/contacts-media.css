@@ -7,6 +7,20 @@
     height: 55vh;
   }
 
+  @media (max-height: 852px) {
+    .contacts-form.active {
+      height: auto;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 0.75rem;
+      right: 2.75rem;
+    }
+  }
+
   .create-contact-button,
   .cancel-button {
     font-size: var(--font-size-base);
@@ -225,7 +239,7 @@
     width: 100%;
     height: 50%;
     align-items: center;
-    padding: 3.125rem 1.25rem 0 1.25rem;
+    padding: 3.125rem 1.25rem 1rem 1.25rem;
     margin-left: 0;
   }
   .form-contact-buttons {

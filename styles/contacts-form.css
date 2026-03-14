@@ -14,7 +14,7 @@
   max-width: 75rem;
   height: 60vh;
   background-color: var(--color-white);
-  border-radius: 2.5rem;
+  border-radius: 2.50rem;
   display: flex;
   position: relative;
   opacity: 0;
@@ -52,7 +52,7 @@
   width: 40%;
   font-weight: var(--font-weight-bold);
   padding: 4.125rem 2.875rem 4.125rem 2.875rem;
-  border-radius: 2.5rem 0rem 0rem 2.5rem;
+  border-radius: 2.12rem 0rem 0rem 2.12rem;
 }
 
 .form-contact-header-title {
@@ -87,9 +87,9 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   width: 40%;
-  padding: 1.25rem;
+  padding: 3rem 1.25rem 1.25rem 1.25rem;
 }
 
 .input-container {
@@ -244,12 +244,13 @@
 
 .close-button {
   position: absolute;
-  top: 3rem;
-  right: 3rem;
+  top: 2rem;
+  right: 2rem;
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--color-gray-600);
   cursor: pointer;
+  z-index: 10;
 }
 
 /* ====== Mobile & Floating Action Buttons ====== */
