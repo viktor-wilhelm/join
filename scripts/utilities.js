@@ -1,5 +1,5 @@
 /**
- * Checks if a user is logged in. 
+ * Checks if a user is logged in via sessionStorage.
  * If not, redirects automatically to the login page.
  *
  * @returns {Object|null} The logged-in user object, or null if no user is found.

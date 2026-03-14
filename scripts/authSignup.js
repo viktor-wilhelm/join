@@ -1,5 +1,7 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase.config.js';
 import { getData, postData } from './firebase.js';
-import { showInputError, hideInputError, initPasswordIconToggle } from './authUtilities.js';
+import { showInputError, hideInputError, initPasswordIconToggle, showLogin } from './authUtilities.js';
 const signupForm = document.getElementById('signupForm');
 const signupName = document.getElementById('signupName');
 const signupEmail = document.getElementById('signupEmail');
@@ -95,7 +97,6 @@ function getNewUserData() {
     return {
         name: signupName.value.trim(),
         email: signupEmail.value.trim(),
-        password: signupPassword.value
     };
 }
 
@@ -129,9 +130,7 @@ function handleSignupSuccess() {
         signupSuccessModal.classList.remove('show');
         signupForm.reset();
 
-        if (typeof showLogin === "function") {
-            showLogin({ preventDefault: () => { } });
-        }
+        showLogin({ preventDefault: () => { } });
     }, 2000);
 }
 
@@ -164,6 +163,7 @@ function showEmailInUseError() {
  * @param {Object} userData - The new user's data.
  */
 async function createUser(userData) {
+    await createUserWithEmailAndPassword(auth, userData.email, signupPassword.value);
     await postData("users", userData);
 }
 
@@ -176,16 +176,14 @@ async function addUser() {
     const newUser = getNewUserData();
     setSubmitting(true);
     try {
-        const emailExists = await checkIfEmailExists(newUser.email);
-        if (emailExists) {
-            showEmailInUseError();
-            setSubmitting(false);
-            return;
-        }
         await createUser(newUser);
         handleSignupSuccess();
     } catch (error) {
-        console.error("Firebase Error:", error);
+        if (error.code === 'auth/email-already-in-use') {
+            showEmailInUseError();
+        } else {
+            console.error("Firebase Error:", error);
+        }
     } finally {
         setSubmitting(false);
     }

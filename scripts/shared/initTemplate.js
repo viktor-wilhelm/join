@@ -2,6 +2,8 @@ import { includeHTML } from './includeHtml.js';
 import { getInitials } from './utilities.js';
 import { removeCurrentUserContact, resetDataStore } from '../dataStore.js';
 import { setSidebarMode, setupLoginButton, setActiveMenuBtnOnLoad, setupMenuNavigation } from './menu.js';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../config/firebase.config.js';
 
 /**
  * Initializes the shared template (header/menu) after includes are loaded
@@ -48,10 +50,11 @@ function setupLogoutLink() {
     sessionStorage.removeItem("loggedInUser");
     sessionStorage.removeItem("joinData");
     sessionStorage.removeItem("greetingShown");
-
     resetDataStore();
 
-    window.location.href = "../index.html";
+    signOut(auth).finally(() => {
+      window.location.href = "../index.html";
+    });
   });
 }
 

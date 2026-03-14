@@ -1,6 +1,8 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase.config.js';
 import { getData } from './firebase.js';
 import { initDataStore, injectCurrentUserAsContact } from './dataStore.js';
-import { initPasswordIconToggle } from './authUtilities.js';
+import { initPasswordIconToggle, showInputError, hideInputError } from './authUtilities.js';
 const loginForm = document.getElementById('loginForm');
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
@@ -24,18 +26,15 @@ function toggleLoginButton() {
 }
 
 /**
- * Fetches a user by email from the data storage. 
- * @param {string} email - The email of the user to fetch.
- * @return {Promise<Object|null>} The user object if found, otherwise null.
+ * Fetches a user profile from the database by email.
+ * @param {string} email
+ * @return {Promise<Object|null>}
  */
 async function getUserByEmail(email) {
     const allUsers = await getData("users");
-
     if (!allUsers) return null;
-
     const userList = Object.values(allUsers);
-    const foundUser = userList.find(u => u.email.toLowerCase() === email.toLowerCase());
-    return foundUser || null;
+    return userList.find(u => u.email.toLowerCase() === email.toLowerCase()) || null;
 }
 
 /**
@@ -51,13 +50,19 @@ async function handleLogin(event) {
 
     const email = loginEmail.value.trim();
     const password = loginPassword.value;
-    const user = await getUserByEmail(email);
 
-    if (user && user.password === password) {
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        const user = await getUserByEmail(email);
+        const sessionUser = user ? { name: user.name, email: user.email } : { name: email, email };
         await initDataStore();
-        completeUserLogin(user);
-    } else {
-        showLoginError();
+        completeUserLogin(sessionUser);
+    } catch (error) {
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+            showInputError(loginErrorMessage, null, "No account found. Please sign up first.");
+        } else {
+            showLoginError();
+        }
     }
 }
 
@@ -107,10 +112,11 @@ function redirectAfterDelay(url, delay = 500) {
 /**
  * Handles the guest login process.
  */
-function handleGuestLogin() {
-    const guestUser = getGuestUser();
-    fillLoginFields(guestUser);
-    disableLoginButton();
+/**
+ * Handles the guest login process without Firebase Auth.
+ */
+async function handleGuestLogin() {
+    const guestUser = { name: "Guest", email: "guest@mail.com", guest: true };
     completeGuestLogin(guestUser);
 }
 
@@ -125,7 +131,6 @@ async function completeUserLogin(currentUser) {
     sessionStorage.setItem('loggedInUser', JSON.stringify(currentUser));
     await initDataStore();
     injectCurrentUserAsContact();
-
     window.location.href = "./html/summary.html";
 }
 
