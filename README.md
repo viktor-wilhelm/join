@@ -7,7 +7,6 @@
   
   [![Live Demo](https://img.shields.io/badge/demo-live-green.svg)](https://join.viktor-wilhelm.de)
   [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue.svg)](https://github.com/rockviktor78/join)
-  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 </div>
 
 ---
@@ -329,6 +328,8 @@ The UI follows the Figma design specifications with:
 ---
 
 ## 📝 License
+
+**ISC License** - See [package.json](package.json) for details.
 
 This project is part of a training program and is intended for educational purposes.
 
