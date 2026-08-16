@@ -8,8 +8,8 @@
   [![Live Demo](https://img.shields.io/badge/demo-live-green.svg)](https://join.viktor-wilhelm.de)
   [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue.svg)](https://github.com/rockviktor78/join)
   [![LinkedIn](https://img.shields.io/badge/LinkedIn-viktor--wilhelm-0077B5.svg?logo=linkedin)](https://www.linkedin.com/in/viktor-wilhelm)
-</div> 
-(Ctrl + Click → new tab)
+</div>
+Ctrl + Click → open Live Demo in a new tab
 
 ---
 
