@@ -1,5 +1,7 @@
 # 📋 Join - Kanban Task Management
 
+[**Live Demo (Ctrl + Click → new tab)**](https://join.viktor-wilhelm.de/)
+
 <div align="center">
   <img src="./assets/img/shared/join-logo-blue.svg" alt="Join Logo" width="200"/>
   
@@ -20,54 +22,23 @@ Whether you're working solo or collaborating with a team, Join provides all the 
 
 ---
 
-## 📸 Screenshots
-
-### Dashboard Overview
-![Dashboard](./assets/screenshots/dashboard.png)
-*The Summary Dashboard shows all your tasks at a glance with upcoming deadlines*
-
-### Kanban Board
-![Kanban Board](./assets/screenshots/board.png)
-*Drag and drop tasks between columns to update their status*
-
-### Task Details
-![Task Details](./assets/screenshots/task-detail.png)
-*View and edit all task information including subtasks and assignments*
-
-### Contact Management
-![Contacts](./assets/screenshots/contacts.png)
-*Manage your contacts and assign them to tasks*
-
-### Mobile View
-<div align="center">
-  <img src="./assets/screenshots/mobile-board.png" alt="Mobile Board" width="300"/>
-</div>
-
-*Fully responsive design works on all devices*
-
-> **Note:** To add screenshots, create a folder `assets/screenshots/` and add your images there. Recommended screenshot names:
-> - `dashboard.png` - Summary/Dashboard view
-> - `board.png` - Kanban board with tasks
-> - `task-detail.png` - Task detail overlay
-> - `contacts.png` - Contact list view
-> - `mobile-board.png` - Mobile board view
-
----
-
 ### ✨ Key Features
 
 #### 🔐 User Management & Authentication
+
 - **User Registration** - Create your account with email, name, and password
 - **Secure Login** - Access your personalized dashboard
 - **Guest Access** - Try all features without registration
 - **Session Management** - Secure logout functionality
 
 #### 📊 Dashboard & Summary
+
 - **Task Overview** - See total tasks in each status (ToDo, In Progress, Awaiting Feedback, Done)
 - **Upcoming Deadlines** - Track tasks with nearest due dates
 - **Personalized Greeting** - Time-based welcome messages
 
 #### 🎯 Kanban Board & Task Management
+
 - **Visual Workflow** - Four-column Kanban layout (ToDo, In Progress, Awaiting Feedback, Done)
 - **Task Cards** - Display category, title, description preview, assigned users, and priority
 - **Drag & Drop** - Intuitive task movement between columns (Desktop & Mobile)
@@ -77,6 +48,7 @@ Whether you're working solo or collaborating with a team, Join provides all the 
 - **Priority Levels** - Visual indicators for Urgent, Medium, and Low priority tasks
 
 #### ✅ Advanced Task Features
+
 - **Subtask Management** - Break down tasks into smaller actionable items
 - **Progress Tracking** - Visual progress bars showing completion status
 - **Task Editing** - Modify all task details including title, description, due date, priority, and assignments
@@ -84,6 +56,7 @@ Whether you're working solo or collaborating with a team, Join provides all the 
 - **Category System** - Organize tasks as "Technical Tasks" or "User Story"
 
 #### 👥 Contact Management
+
 - **Contact List** - Alphabetically sorted contacts with email addresses
 - **Add Contacts** - Create new contacts with name, email, and phone
 - **Edit & Delete** - Keep your contact list up-to-date
@@ -91,12 +64,14 @@ Whether you're working solo or collaborating with a team, Join provides all the 
 - **Contact Details** - View full information including email and phone number
 
 #### 📱 Responsive Design
+
 - **Mobile Optimized** - Works seamlessly on devices as small as 320px
 - **Desktop Experience** - Full-featured interface for larger screens
 - **Vertical Board Layout** - Mobile-friendly column stacking
 - **Touch-Friendly** - Optimized touch interactions
 
 #### 💫 User Experience
+
 - **Instant Feedback** - Toast notifications for all actions
 - **Hover Effects** - Visual feedback on interactive elements
 - **Form Validation** - Custom validation without HTML5 defaults
@@ -108,16 +83,19 @@ Whether you're working solo or collaborating with a team, Join provides all the 
 ## 🛠️ Built With
 
 ### Frontend
+
 - **HTML5** - Semantic markup
 - **CSS3** - Custom styling with CSS variables
 - **JavaScript (ES6+)** - Modern JavaScript with modules
 - **Vanilla JS** - No frameworks, pure JavaScript
 
 ### Backend & Database
+
 - **Firebase Authentication** - User management
 - **Firebase Realtime Database** - Data storage and synchronization
 
 ### Development Tools
+
 - **Live Server** - Development server
 - **Git & GitHub** - Version control
 - **JSDoc** - Code documentation
@@ -136,26 +114,30 @@ Whether you're working solo or collaborating with a team, Join provides all the 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/viktor-wilhelm/join.git
    cd join/join-app
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Configure Firebase**
-   
+
    Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   
+
    Copy the example config file:
+
    ```bash
    cp config/firebase.config.js.example config/firebase.config.js
    ```
-   
+
    Update `config/firebase.config.js` with your Firebase credentials:
+
    ```javascript
    export const firebaseConfig = {
      apiKey: "YOUR_API_KEY",
@@ -164,15 +146,16 @@ Whether you're working solo or collaborating with a team, Join provides all the 
      projectId: "YOUR_PROJECT_ID",
      storageBucket: "YOUR_STORAGE_BUCKET",
      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-     appId: "YOUR_APP_ID"
+     appId: "YOUR_APP_ID",
    };
    ```
 
 4. **Start the development server**
+
    ```bash
    npm run dev
    ```
-   
+
    The application will open automatically at `http://localhost:5500`
 
 ---
@@ -320,6 +303,7 @@ All features have been verified on both desktop and mobile devices.
 ## 🎨 Design
 
 The UI follows the Figma design specifications with:
+
 - Consistent colors, spacing, and shadows
 - Smooth transitions (75-125ms)
 - Cursor pointer on all clickable elements
@@ -351,6 +335,46 @@ This project is part of a training program and is intended for educational purpo
 - Design inspiration from modern Kanban tools
 - Firebase for backend infrastructure
 - The Developer Akademie training program
+
+---
+
+## 📸 Screenshots
+
+### Dashboard Overview
+
+![Dashboard](./assets/screenshots/dashboard.png)
+_The Summary Dashboard shows all your tasks at a glance with upcoming deadlines_
+
+### Kanban Board
+
+![Kanban Board](./assets/screenshots/board.png)
+_Drag and drop tasks between columns to update their status_
+
+### Task Details
+
+![Task Details](./assets/screenshots/task-detail.png)
+_View and edit all task information including subtasks and assignments_
+
+### Contact Management
+
+![Contacts](./assets/screenshots/contacts.png)
+_Manage your contacts and assign them to tasks_
+
+### Mobile View
+
+<div align="center">
+  <img src="./assets/screenshots/mobile-board.png" alt="Mobile Board" width="300"/>
+</div>
+
+_Fully responsive design works on all devices_
+
+> **Note:** To add screenshots, create a folder `assets/screenshots/` and add your images there. Recommended screenshot names:
+>
+> - `dashboard.png` - Summary/Dashboard view
+> - `board.png` - Kanban board with tasks
+> - `task-detail.png` - Task detail overlay
+> - `contacts.png` - Contact list view
+> - `mobile-board.png` - Mobile board view
 
 ---
 
