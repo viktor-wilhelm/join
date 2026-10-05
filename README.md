@@ -6,10 +6,17 @@
   ### A lightweight and collaborative planning tool for software development teams
   
   [![Live Demo](https://img.shields.io/badge/demo-live-green.svg)](https://join.viktor-wilhelm.de)
-  [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue.svg)](https://github.com/rockviktor78/join)
+  [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue.svg)](https://github.com/viktor-wilhelm/join)
   [![LinkedIn](https://img.shields.io/badge/LinkedIn-viktor--wilhelm-0077B5.svg?logo=linkedin)](https://www.linkedin.com/in/viktor-wilhelm)
 </div>
-Ctrl + Click → open Live Demo in a new tab
+
+---
+
+## 🌐 Live Demo
+
+### 👉 [https://join.viktor-wilhelm.de/](https://join.viktor-wilhelm.de/)
+
+💡 Tip: Ctrl + Click → open Live Demo in a new tab
 
 ---
 
