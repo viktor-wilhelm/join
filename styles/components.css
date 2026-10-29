@@ -95,3 +95,18 @@
     display: none;
   }
 }
+
+/* ====== Save error notice (shown when changes could not be written to Firebase) ====== */
+.save-error-toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--spacing-2xl);
+  transform: translateX(-50%);
+  max-width: calc(100vw - 2rem);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-error);
+  color: var(--color-white);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}

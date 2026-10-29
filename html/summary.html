@@ -2,6 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="../assets/img/favicon/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicon/apple-touch-icon.png" />
@@ -43,7 +48,7 @@
     <div w3-include-html="../assets/templates/header.html" style="display: contents"></div>
     <div w3-include-html="../assets/templates/sidebar.html" style="display: contents"></div>
     <main class="content-area">
-      <div class="content-limit content-padding">
+      <div class="content-limit content-padding summary__content">
         <header class="summary__header">
           <h1 class="summary__title">Join360</h1>
           <div class="separator separator--h-mobile separator--blue" role="separator"></div>

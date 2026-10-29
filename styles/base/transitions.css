@@ -1,7 +1,6 @@
-/* View Transitions API for smooth page transitions */
-@view-transition {
-  navigation: auto;
-}
+/* View Transitions API for smooth page transitions.
+   The cross-document opt-in (@view-transition) is inlined in the <head> of every page:
+   in this file it may not be applied yet when the new page is revealed. */
 
 /* Prevent animation for persistent elements */
 ::view-transition-old(header-persistent),

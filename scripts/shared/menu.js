@@ -2,6 +2,7 @@
  * Menu Navigation Handler
  * Manages active states and navigation
  */
+import { flushWrites } from '../firebase.js';
 
 /**
  * Sets the active menu button based on the current page
@@ -92,9 +93,10 @@ function setupMenuNavigation() {
 function setupMenuButton(id, url) {
   const button = document.getElementById(id);
   if (button) {
-    button.addEventListener("click", (e) => {
+    button.addEventListener("click", async (e) => {
       e.preventDefault();
       setActiveMenuBtn(id);
+      await flushWrites();
       window.location.href = url;
     });
   }

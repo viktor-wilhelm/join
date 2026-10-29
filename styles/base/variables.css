@@ -19,6 +19,9 @@
   --color-accent-light: #4fc3f7;
   --color-accent-dark: #005dff;
 
+  /* Colors - Summary greeting */
+  --color-greeting-name: #124658;
+
   /* Colors - Feedback */
   --color-success: #7ae229;
   --color-error: #e60025;

@@ -1,5 +1,6 @@
 import { protectPage, assignContactColors } from './utilities.js';
 import { initDataStore, dataStore, saveStore } from './dataStore.js';
+import { createId } from './firebase.js';
 import { checkMobile, closeActionFab } from './contactsMobile.js';
 import { templateContact, templateContactDetails, templateRenderLetterGroup,
          templateAddNewContact, templateEditContact } from './contactsTemplates.js';
@@ -7,7 +8,6 @@ import { templateContact, templateContactDetails, templateRenderLetterGroup,
 let currentUser;
 
 let loadedContacts = [];
-let contactIdCounter = 1;
 
 /**
  * Initializes the contacts module by loading contacts from the data store
@@ -21,8 +21,6 @@ async function initContacts() {
 
   await initDataStore();
   loadContactsFromStore();
-
-  contactIdCounter = getNextContactId(loadedContacts);
 }
 
 /**
@@ -328,7 +326,7 @@ function pushNewContact() {
   const name = document.getElementById("newContactName").value.trim();
   const email = document.getElementById("newContactEmail").value.trim();
   const phone = document.getElementById("newContactPhone").value.trim();
-  const id = `contactId${contactIdCounter++}`;
+  const id = createId('contacts');
   const newContact = { id, name, phone, email };
   const coloredContact = assignContactColors([newContact])[0];
   loadedContacts.push(coloredContact);
@@ -342,25 +340,6 @@ function pushNewContact() {
   };
   saveStore();
   return coloredContact;
-}
-
-/**
- * Calculates the next contact ID based on currently loaded contacts.
- * Extracts numeric part from IDs like "contactId12".
- *
- * @param {Array<Object>} contactsArray - Array of loaded contacts
- * @returns {number} Next numeric ID for a new contact
- */
-function getNextContactId(contactsArray) {
-  if (!contactsArray || contactsArray.length === 0) return 1;
-
-  const ids = contactsArray
-    .map(contact => {
-      const match = String(contact.id).match(/\d+$/);
-      return match ? Number(match[0]) : 0;
-    });
-
-  return Math.max(...ids) + 1;
 }
 
 /**
