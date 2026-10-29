@@ -6,8 +6,8 @@
  */
 
 import { initializeApp } from 'firebase/app';
-import { getDatabase } from 'firebase/database';
-import { getAuth } from 'firebase/auth';
+import { getDatabase, connectDatabaseEmulator } from 'firebase/database';
+import { getAuth, connectAuthEmulator } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB464O5d1meelyrtO-0MZK0ajdmal7E-BU",
@@ -23,5 +23,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
+
+// Local testing only: run `npm run emulators`, then set localStorage.joinUseEmulator = "1" on localhost.
+if (location.hostname === 'localhost' && localStorage.getItem('joinUseEmulator') === '1') {
+  connectDatabaseEmulator(db, '127.0.0.1', 9000);
+  connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+}
 
 export { db, auth };

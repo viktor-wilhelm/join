@@ -1,4 +1,6 @@
 import { assignContactColors } from './utilities.js';
+import { addTask } from './dataStore.js';
+import { getSelectedCategory } from './addTaskOverlay.js';
 import { handleAddTaskSuccess, clearFields } from './addTask.js';
 import { templateContact } from './addTaskTemplate.js';
 
@@ -190,12 +192,18 @@ function resetSelectedContacts() {
 }
 
 /**
- * Creates a new task by validating the form, saving it to storage,
- * clearing the form fields, and showing the success modal.
+ * Creates a new task by validating the form and saving it to the shared database.
+ * The button stays disabled while saving. Only after a successful save the form is cleared
+ * and the success modal is shown.
  */
-function createTask() {
+async function createTask() {
   if (!validateAllTasks()) return;
-  saveToStorage(assembleTask());
+  const button = document.getElementById('createTaskButton');
+  if (button) button.disabled = true;
+
+  const saved = await addTask(assembleTask());
+  if (button) button.disabled = false;
+  if (!saved) return;
   clearFields();
   handleAddTaskSuccess();
 }
@@ -210,20 +218,13 @@ function assembleTask() {
   const cat = document.getElementById('taskCategory');
   const selectedCategory = cat?.options[cat.selectedIndex]?.text.toLowerCase() || "";
 
-  const TASKTYPE_TO_CATEGORY = {
-    "technical task": "to do",
-    "user story": "to do"
-  };
-
   return {
     title: document.getElementById('taskTitle').value.trim(),
     description: document.getElementById('taskDescription').value.trim(),
     dueDate: document.getElementById('taskDueDate').value,
     priority: document.querySelector('.priority__button.active')?.value || 'medium',
     taskType: selectedCategory,
-    category: (typeof selectedCategoryForNewTask !== 'undefined')
-      ? selectedCategoryForNewTask
-      : TASKTYPE_TO_CATEGORY[selectedCategory] || 'to do',
+    category: getSelectedCategory(),
     assignedTo: Array.from(selectedContacts.keys()),
     subtasks: getSubtasks()
   };
@@ -301,18 +302,6 @@ function hideError(input, errorText) {
   if (input) {
     input.classList.remove('error-border');
   }
-}
-
-/**
- * Saves a new task object to session storage under a unique key based on the current timestamp.
- *
- * @param {Object} newTask - The task object to save.
- */
-function saveToStorage(newTask) {
-  const raw = sessionStorage.getItem('joinData');
-  const data = raw ? JSON.parse(raw) : { tasks: {} };
-  data.tasks[`task${Date.now()}`] = newTask;
-  sessionStorage.setItem('joinData', JSON.stringify(data));
 }
 
 /**

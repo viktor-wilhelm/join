@@ -2,7 +2,8 @@ import { includeHTML } from './includeHtml.js';
 import { getInitials } from './utilities.js';
 import { removeCurrentUserContact, resetDataStore } from '../dataStore.js';
 import { setSidebarMode, setupLoginButton, setActiveMenuBtnOnLoad, setupMenuNavigation } from './menu.js';
-import { signOut } from 'firebase/auth';
+import { signOut, deleteUser } from 'firebase/auth';
+import { flushWrites } from '../firebase.js';
 import { auth } from '../../config/firebase.config.js';
 
 /**
@@ -43,19 +44,33 @@ function setupLogoutLink() {
   const logoutLink = document.getElementById("logoutLink");
   if (!logoutLink) return;
 
-  logoutLink.addEventListener("click", (event) => {
+  logoutLink.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    removeCurrentUserContact();
-    sessionStorage.removeItem("loggedInUser");
-    sessionStorage.removeItem("joinData");
-    sessionStorage.removeItem("greetingShown");
-    resetDataStore();
-
-    signOut(auth).finally(() => {
-      window.location.href = "../index.html";
-    });
+    await flushWrites();
+    clearLocalSession();
+    await endFirebaseSession();
+    window.location.href = "../index.html";
   });
+}
+
+/**
+ * Removes the session data of the logged-in user from the browser.
+ */
+function clearLocalSession() {
+  removeCurrentUserContact();
+  sessionStorage.removeItem("loggedInUser");
+  sessionStorage.removeItem("joinData");
+  sessionStorage.removeItem("greetingShown");
+  resetDataStore();
+}
+
+/**
+ * Ends the Firebase session. An anonymous guest account is deleted, so guest accounts do not pile up.
+ */
+async function endFirebaseSession() {
+  if (auth.currentUser?.isAnonymous) await deleteUser(auth.currentUser).catch(() => {});
+  await signOut(auth).catch(() => {});
 }
 
 /**

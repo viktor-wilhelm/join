@@ -68,3 +68,8 @@ Thumbs.db
 /dist-exports/
 
 
+
+# Firebase emulator logs
+firebase-debug.log
+database-debug.log
+ui-debug.log

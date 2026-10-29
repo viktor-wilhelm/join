@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase.config.js';
-import { getData, postData } from './firebase.js';
+import { setData } from './firebase.js';
 import { showInputError, hideInputError, initPasswordIconToggle, showLogin } from './authUtilities.js';
 const signupForm = document.getElementById('signupForm');
 const signupName = document.getElementById('signupName');
@@ -135,36 +135,13 @@ function handleSignupSuccess() {
 }
 
 /**
- * Checks if an email already exists in the database.
- * @param {string} email - The email to check.
- * @return {boolean} True if the email exists; false otherwise.
- */
-async function checkIfEmailExists(email) {
-    const allUsers = await getData("users");
-    if (allUsers === null) {
-        return false;
-    }
-    const userList = Object.values(allUsers);
-    const found = userList.some(user => user.email.toLowerCase() === email.toLowerCase());
-    return found;
-}
-
-/**
- * Displays an error message indicating the email is already in use.    
- */
-function showEmailInUseError() {
-    signupEmailError.innerText = "This email is already in use.";
-    signupEmailError.classList.add('show');
-    signEmailGroup.classList.add('auth-card__input-group--error');
-}
-
-/**
- * Creates a new user in the database.
- * @param {Object} userData - The new user's data.
+ * Creates the Firebase account and stores the profile (name, email) under `users/<uid>`.
+ * The password is only sent to Firebase Authentication and never stored in the database.
+ * @param {Object} userData - The new user's name and email.
  */
 async function createUser(userData) {
-    await createUserWithEmailAndPassword(auth, userData.email, signupPassword.value);
-    await postData("users", userData);
+    const credential = await createUserWithEmailAndPassword(auth, userData.email, signupPassword.value);
+    await setData(`users/${credential.user.uid}`, userData);
 }
 
 /**

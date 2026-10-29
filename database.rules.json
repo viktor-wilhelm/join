@@ -1,0 +1,50 @@
+{
+  "rules": {
+    "tasks": {
+      ".read": "auth != null",
+      "$taskId": {
+        ".write": "auth != null",
+        ".validate": "newData.hasChildren(['title', 'dueDate', 'category', 'taskType', 'priority'])",
+        "title": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100" },
+        "description": { ".validate": "newData.isString() && newData.val().length <= 500" },
+        "dueDate": { ".validate": "newData.isString() && newData.val().length <= 20" },
+        "priority": { ".validate": "newData.val() === 'urgent' || newData.val() === 'medium' || newData.val() === 'low'" },
+        "category": { ".validate": "newData.val() === 'to do' || newData.val() === 'in progress' || newData.val() === 'await feedback' || newData.val() === 'done'" },
+        "taskType": { ".validate": "newData.val() === 'technical task' || newData.val() === 'user story'" },
+        "assignedTo": {
+          "$index": { ".validate": "newData.isString() && newData.val().length <= 60" }
+        },
+        "subtasks": {
+          "$index": {
+            "title": { ".validate": "newData.isString() && newData.val().length <= 100" },
+            "done": { ".validate": "newData.isBoolean()" },
+            "$other": { ".validate": false }
+          }
+        },
+        "$other": { ".validate": false }
+      }
+    },
+    "contacts": {
+      ".read": "auth != null",
+      "$contactId": {
+        ".write": "auth != null",
+        ".validate": "newData.hasChildren(['name', 'email'])",
+        "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100" },
+        "email": { ".validate": "newData.isString() && newData.val().length <= 100" },
+        "phone": { ".validate": "newData.isString() && newData.val().length <= 30" },
+        "color": { ".validate": "newData.isString() && newData.val().length <= 20" },
+        "$other": { ".validate": false }
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "auth.uid === $uid",
+        ".write": "auth.uid === $uid",
+        ".validate": "newData.hasChildren(['name', 'email'])",
+        "name": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100" },
+        "email": { ".validate": "newData.isString() && newData.val().length <= 100" },
+        "$other": { ".validate": false }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInAnonymously } from 'firebase/auth';
 import { auth } from '../config/firebase.config.js';
-import { getData } from './firebase.js';
-import { initDataStore, injectCurrentUserAsContact } from './dataStore.js';
+import { getData, setData } from './firebase.js';
+import { initDataStore, injectCurrentUserAsContact, ensureOwnContact } from './dataStore.js';
 import { initPasswordIconToggle, showInputError, hideInputError } from './authUtilities.js';
 const loginForm = document.getElementById('loginForm');
 const loginEmail = document.getElementById('loginEmail');
@@ -26,15 +26,20 @@ function toggleLoginButton() {
 }
 
 /**
- * Fetches a user profile from the database by email.
- * @param {string} email
- * @return {Promise<Object|null>}
+ * Fetches the profile of the signed-in user from `users/<uid>`.
+ * A missing profile (e.g. an account created before profiles were stored by UID)
+ * is created with a name derived from the email.
+ * @param {string} email - The email the user signed in with.
+ * @return {Promise<{name: string, email: string}>}
  */
-async function getUserByEmail(email) {
-    const allUsers = await getData("users");
-    if (!allUsers) return null;
-    const userList = Object.values(allUsers);
-    return userList.find(u => u.email.toLowerCase() === email.toLowerCase()) || null;
+async function getUserProfile(email) {
+    const path = `users/${auth.currentUser.uid}`;
+    const profile = await getData(path);
+    if (profile) return profile;
+
+    const created = { name: getNameFromEmail(email), email };
+    await setData(path, created).catch(() => {});
+    return created;
 }
 
 /**
@@ -68,10 +73,8 @@ async function handleLogin(event) {
 
     try {
         await signInWithEmailAndPassword(auth, email, password);
-        const user = await getUserByEmail(email);
-        const sessionUser = user ? { name: user.name, email: user.email } : { name: getNameFromEmail(email), email };
-        await initDataStore();
-        completeUserLogin(sessionUser);
+        const user = await getUserProfile(email);
+        completeUserLogin({ name: user.name, email: user.email });
     } catch (error) {
         if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
             showInputError(loginErrorMessage, null, "No account found. Please sign up first.");
@@ -79,38 +82,6 @@ async function handleLogin(event) {
             showLoginError();
         }
     }
-}
-
-/**
- * Creates a guest user object.
- * @return {Object} The guest user object.
- */
-function getGuestUser() {
-    return {
-        name: "Guest",
-        email: "guest@mail.com",
-        password: "guest_demo123",
-        guest: true,
-    };
-}
-
-/**
- * Fills the login fields with the provided user's credentials.
- * @param {Object} guestUser - The guest user object containing email and password.
- */
-function fillLoginFields(guestUser) {
-    if (loginEmail && loginPassword) {
-        loginEmail.value = guestUser.email;
-        loginPassword.value = guestUser.password;
-    }
-    disableLoginButton();
-}
-
-/**
- * Disables the login button.
- */
-function disableLoginButton() {
-    if (loginBtn) loginBtn.disabled = true;
 }
 
 /**
@@ -125,13 +96,13 @@ function redirectAfterDelay(url, delay = 500) {
 }
 
 /**
- * Handles the guest login process.
- */
-/**
- * Handles the guest login process without Firebase Auth.
+ * Handles the guest login process with Firebase Anonymous Authentication, so the guest
+ * works with the same shared tasks and contacts. If Anonymous Authentication is not
+ * available, the guest works locally without any Firebase request.
  */
 async function handleGuestLogin() {
     const guestUser = { name: "Guest", email: "guest@mail.com", guest: true };
+    await signInAnonymously(auth).catch(() => {});
     completeGuestLogin(guestUser);
 }
 
@@ -145,7 +116,7 @@ async function handleGuestLogin() {
 async function completeUserLogin(currentUser) {
     sessionStorage.setItem('loggedInUser', JSON.stringify(currentUser));
     await initDataStore();
-    injectCurrentUserAsContact();
+    await ensureOwnContact(currentUser);
     window.location.href = "./html/summary.html";
 }
 

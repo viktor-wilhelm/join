@@ -44,6 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /**
+ * Returns the status column the new task is added to.
+ *
+ * @returns {string} The category, e.g. "to do" or "in progress".
+ */
+function getSelectedCategory() {
+  return selectedCategoryForNewTask;
+}
+
+/**
  * Opens the "Add Task" overlay panel and optionally preselects a task category.
  * On mobile devices (≤ 768px), the user is redirected to the standalone
  * add-task page instead of opening the overlay.
@@ -74,6 +83,7 @@ function openAddTaskOverlay(category = "to do") {
 }
 
 export {
+  getSelectedCategory,
   closeAddTaskOverlay,
   openAddTaskOverlay,
 };
