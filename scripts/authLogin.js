@@ -38,6 +38,21 @@ async function getUserByEmail(email) {
 }
 
 /**
+ * Derives a display name from an email address, used when the user has no database record.
+ * Drops the "+tag" and the domain, strips digits and capitalizes each word,
+ * e.g. "wilhelm.viktor78+join@gmail.com" becomes "Wilhelm Viktor".
+ *
+ * @param {string} email - The user's email address.
+ * @return {string} The derived name, or "User" if nothing usable is left.
+ */
+function getNameFromEmail(email) {
+    const localPart = email.split('@')[0].split('+')[0];
+    const words = localPart.replace(/\d+/g, '').split(/[._-]+/).filter(Boolean);
+    const name = words.map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+    return name || 'User';
+}
+
+/**
  * Handles login form submission, validates credentials, 
  * and initializes the data store with `initDataStore()` on success.
  *
@@ -54,7 +69,7 @@ async function handleLogin(event) {
     try {
         await signInWithEmailAndPassword(auth, email, password);
         const user = await getUserByEmail(email);
-        const sessionUser = user ? { name: user.name, email: user.email } : { name: email, email };
+        const sessionUser = user ? { name: user.name, email: user.email } : { name: getNameFromEmail(email), email };
         await initDataStore();
         completeUserLogin(sessionUser);
     } catch (error) {

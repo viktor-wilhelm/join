@@ -40,13 +40,14 @@
 .summary__greeting-title {
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-normal);
+  color: var(--color-primary);
   white-space: nowrap;
 }
 
 .summary__greeting-name {
   font-size: var(--font-size-5xl);
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-greeting-name);
 }
 
 /* ====== Card Component  ====== */
@@ -294,4 +295,52 @@
   .summary {
     gap: 1rem;
   }
+}
+
+/* ====== Desktop with greeting (>1200px) ======
+   Cards keep a fixed width, the greeting takes only what is left and may use
+   the space of the page's right padding. */
+@media (min-width: 1201px) {
+  .summary__content {
+    max-width: none;
+    padding-right: var(--spacing-md);
+  }
+
+  /* 80px on wide screens, shrinks smoothly to 24px so the name keeps its one line */
+  .summary {
+    gap: clamp(1.5rem, calc(100vw - 1354px), 5rem);
+  }
+
+  .summary__grid {
+    flex: 0 0 35rem;
+  }
+
+  .summary__greeting {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .summary__greeting-title {
+    white-space: normal;
+  }
+
+  /* 168 x 168; edge cards sit flush with the grid, the middle one is centered */
+  .card--third {
+    width: 10.5rem;
+    height: 10.5rem;
+  }
+  .card--third:nth-child(4) {
+    justify-self: start;
+  }
+  .card--third:nth-child(5) {
+    justify-self: center;
+  }
+  .card--third:nth-child(6) {
+    justify-self: end;
+  }
+}
+
+/* Set by summary.js when not even a single word of the greeting fits */
+.summary__greeting--hidden {
+  display: none;
 }

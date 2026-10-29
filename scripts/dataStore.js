@@ -11,7 +11,8 @@ let dataStore = {
 
 /**
  * Initializes the data store by loading data from session storage if available,
- * or fetching it from Firebase otherwise. Caches the loaded data in session storage.
+ * or fetching it from Firebase otherwise. Guests are not authenticated, so no Firebase
+ * request is sent for them. Caches the loaded data in session storage.
  *
  * @async
  * @returns {Promise<void>} Resolves when the data store is initialized.
@@ -21,6 +22,12 @@ async function initDataStore() {
 
     if (cached) {
         dataStore = JSON.parse(cached);
+        return;
+    }
+
+    const user = JSON.parse(sessionStorage.getItem("loggedInUser"));
+    if (user?.guest) {
+        saveStore();
         return;
     }
 

@@ -3,6 +3,7 @@ import { protectPage } from './utilities.js';
 let allTasks = [];
 let currentUser = {};
 
+const greetingBoxEl = document.querySelector('.summary__greeting');
 const greetingEl = document.querySelector('.summary__greeting-title');
 const nameEl = document.getElementById('user-name-display');
 const todoCountEl = document.getElementById('todoCount');
@@ -72,6 +73,22 @@ function displayGreetingDesktop(user) {
 
     greetingEl.innerText = `${data.greeting}${data.symbol}`;
     nameEl.innerText = data.name;
+    fitGreetingDesktop();
+    window.addEventListener('resize', fitGreetingDesktop);
+    document.fonts?.ready.then(fitGreetingDesktop);
+}
+
+/**
+ * Hides the desktop greeting when even a single word of it does not fit into
+ * its column, so that no word is ever broken or overflows the page.
+ * Re-checked on every resize and once the fonts are loaded.
+ */
+function fitGreetingDesktop() {
+    greetingBoxEl.classList.remove('summary__greeting--hidden');
+    if (getComputedStyle(greetingBoxEl).display === 'none') return;
+
+    const overflows = [greetingEl, nameEl].some(el => el.scrollWidth > el.clientWidth + 1);
+    greetingBoxEl.classList.toggle('summary__greeting--hidden', overflows);
 }
 
 /**

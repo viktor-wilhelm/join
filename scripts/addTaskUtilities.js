@@ -31,7 +31,7 @@ function initDropdown() {
 function loadContactsFromSession() {
   const rawData = sessionStorage.getItem('joinData');
   const data = rawData ? JSON.parse(rawData) : { contacts: {} };
-  const contactsArray = Object.entries(data.contacts).map(([id, c]) => ({ id, ...c }));
+  const contactsArray = Object.entries(data.contacts || {}).map(([id, c]) => ({ id, ...c }));
   return assignContactColors(contactsArray);
 }
 
