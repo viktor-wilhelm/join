@@ -52,12 +52,37 @@
   }
 }
 
-body {
-  opacity: 0;
-  animation: fade-in 0.3s ease-in-out forwards;
+/* Header and menu are inserted by JS after the first render. Naming them keeps the old ones
+   on screen during the page transition instead of crossfading them to a blank page. */
+.header__content {
+  view-transition-name: header-persistent;
 }
 
-/* Ensure body is visible even if JS doesn't load */
-body.loaded {
-  opacity: 1;
+.menu {
+  view-transition-name: menu-persistent;
+}
+
+/* Until the header and menu are inserted, the menu area is already painted,
+   so no light gap shows while the page loads. */
+@media (max-width: 768px) {
+  .app-layout::after {
+    content: "";
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 5rem;
+    background-color: var(--color-primary);
+    z-index: 19;
+  }
+}
+
+@media (min-width: 769px) {
+  .app-layout {
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary) var(--sidebar-width),
+      transparent var(--sidebar-width)
+    );
+  }
 }
