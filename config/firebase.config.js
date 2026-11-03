@@ -16,7 +16,7 @@ const firebaseConfig = {
   projectId: "join-92b31",
   storageBucket: "join-92b31.firebasestorage.app",
   messagingSenderId: "302488060390",
-  appId: "1:302488060360:web:1384f5dd18136dec411627",
+  appId: "1:302488060390:web:1384f5dd18136dec411627",
   measurementId: "G-DNJSJ0P7XD"
 };
 
